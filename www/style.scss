@@ -1,0 +1,210 @@
+$imageDuration: 1.5s;
+$titleDuration: 1s;
+$titleDelay: calc(#{$imageDuration} - #{$imageDuration} / 2);
+$subtitleDuration: $titleDuration;
+$subtitleDelay: calc(#{$titleDelay} + #{$subtitleDuration} - #{$subtitleDuration} / 2);
+$navbarDuration: 1s;
+$navbarDelay: calc(#{$subtitleDelay} + #{$subtitleDuration} - #{$subtitleDuration} / 2);
+$zoomOnHoverDuration: 1s;
+
+
+@font-face {
+  font-family: 'kanit';
+  src: url('./public/fonts/kanit-bold.woff2') format('woff2'), url('./public/fonts/kanit-bold.woff') format('woff');
+}
+
+html, body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: black;
+  color: white;
+  font-family: 'kanit', sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+nav {
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 5rem;
+  font-family: Helvetica;
+  box-sizing: border-box;
+  padding: 0 1rem;
+  position: relative;
+  flex-shrink: 0;
+  opacity: 0;
+
+  animation: navBarFadeIn $navbarDuration ease-in-out forwards;
+  animation-delay: $navbarDelay;
+
+  svg {
+    color: white;
+    fill: white;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+
+    &:first-child {
+      gap: 1rem;
+    }
+    
+    &:last-child {
+      gap: .4rem;
+    }
+  }
+
+  .logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+.hero {
+  text-align: center;
+  margin: 1vw 0;
+
+  h1,h2 {
+    margin: 0;
+    text-transform: uppercase;
+    padding: 0;
+    line-height: 1;
+    font-size: clamp(calc(9000vw / 1018), 3vw, 7vw);
+  }
+  h1 span {
+    display: inline-block;
+    animation: titleFadeIn $titleDuration ease-out forwards;
+    animation-delay: $titleDelay;
+    opacity: 0;
+    visibility: hidden;
+  }
+  h2 {
+    color: transparent;
+    background-color: transparent;
+    -webkit-text-stroke: calc(300vw / 745) white;
+
+    span {
+      display: inline-block;
+      animation: subtitleFadeIn $subtitleDuration ease-out forwards;
+      animation-delay: $subtitleDelay;
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+}
+.images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  flex-grow: 1;
+  gap: .5rem;
+
+  > div {
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+
+    &:after {
+      content: '';
+      position: absolute; 
+      inset: 0;
+      background: black;
+      animation: midCurtainFadeIn $imageDuration ease-out forwards;
+    }
+
+    &:nth-child(1) {
+      background-image: url('./public/1.jpeg');
+      &:after {
+        animation-name: leftCurtainFadeIn;
+      }
+    }
+
+    &:nth-child(2) {
+      background-image: url('./public/2.jpeg');
+    }
+
+    &:nth-child(3) {
+      background-image: url('./public/3.jpeg');
+      &:after {
+        animation-name: rightCurtainFadeIn;
+      }
+    }
+  }
+}
+
+@keyframes navBarFadeIn {
+  0% {
+    transform: translateY(-10%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+} 
+@keyframes titleFadeIn {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-25%) scale(1.2);
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0%) scale(1);
+  }
+}
+
+@keyframes subtitleFadeIn {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(15%) scale(1.2);
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0%) scale(1);
+  }
+}
+
+@keyframes leftCurtainFadeIn {
+  0% {
+    transform: translateY(0%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 70%);
+  }
+  100% {
+    transform: translateY(-100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@keyframes midCurtainFadeIn {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes rightCurtainFadeIn {
+  0% {
+    transform: translateY(0%);
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 0% 100%);;
+  }
+  100% {
+    transform: translateY(-100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}

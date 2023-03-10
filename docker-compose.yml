@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  cpcompany.server:
+    container_name: cpcompany.server
+    build:
+      context: ./docker/
+      dockerfile: Dockerfile-server
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./www/:/home/node/app
+    expose:
+      - "80"
+    ports:
+      - "80:80"
+    command: "npx vite --host --port 80"
