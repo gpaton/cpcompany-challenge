@@ -62,6 +62,16 @@ nav {
     &:last-child {
       gap: .4rem;
     }
+    a {
+      color: white;
+      text-decoration: none;
+      display: inline-block;
+      //transition-duration: .2s;
+      &:hover {
+        animation: linkHover .4s ease-in-out forwards;
+        //transform: scale(1.15) translateY(-5px);
+      }
+    }
   }
 
   .logo {
@@ -83,7 +93,7 @@ nav {
   }
   h1 span {
     display: inline-block;
-    animation: titleFadeIn $titleDuration ease-out forwards;
+    animation: titleFadeIn $titleDuration ease-in-out forwards;
     animation-delay: $titleDelay;
     opacity: 0;
     visibility: hidden;
@@ -95,7 +105,7 @@ nav {
 
     span {
       display: inline-block;
-      animation: subtitleFadeIn $subtitleDuration ease-out forwards;
+      animation: subtitleFadeIn $subtitleDuration ease-in-out forwards;
       animation-delay: $subtitleDelay;
       opacity: 0;
       visibility: hidden;
@@ -119,13 +129,14 @@ nav {
       position: absolute; 
       inset: 0;
       background: black;
-      animation: midCurtainFadeIn $imageDuration ease-out forwards;
+      animation: midCurtainFadeIn $imageDuration ease-in-out forwards;
     }
 
     &:nth-child(1) {
       background-image: url('./public/1.jpeg');
       &:after {
         animation-name: leftCurtainFadeIn;
+        animation-delay: .5s;
       }
     }
 
@@ -137,6 +148,7 @@ nav {
       background-image: url('./public/3.jpeg');
       &:after {
         animation-name: rightCurtainFadeIn;
+        animation-delay: .25s;
       }
     }
   }
@@ -171,6 +183,9 @@ nav {
     opacity: 0;
     transform: translateY(15%) scale(1.2);
   }
+  70% {
+    opacity: 0.4;
+  }
   100% {
     visibility: visible;
     opacity: 1;
@@ -180,7 +195,7 @@ nav {
 
 @keyframes leftCurtainFadeIn {
   0% {
-    transform: translateY(0%);
+    transform: translateY(100%);
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 70%);
   }
   100% {
@@ -200,11 +215,22 @@ nav {
 
 @keyframes rightCurtainFadeIn {
   0% {
-    transform: translateY(0%);
-    clip-path: polygon(0 0, 100% 0, 100% 70%, 0% 100%);;
+    transform: translateY(100%);
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 100%);;
   }
   100% {
     transform: translateY(-100%);
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+@keyframes linkHover {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.075);
+  }
+  100% {
+    transform: translateY(0) scale(1.2);
   }
 }
